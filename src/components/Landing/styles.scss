@@ -1,0 +1,17 @@
+.content {
+    &_container {
+        p {
+            color: $color-white;
+            font-family: $font-family-regular;
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .map {
+            &_img {
+                object-fit: contain;
+                max-width: 100%;
+            }
+        }
+    }
+}

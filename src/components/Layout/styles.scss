@@ -1,0 +1,63 @@
+.layout {
+    * {
+        box-sizing: border-box;
+    }
+
+    &_container {
+        width: 100%;
+        max-width: 1200px;
+        min-height: 100vh;
+        height: max-content;
+        position: relative;
+        padding: 30px 45px;
+        box-sizing: border-box;
+        margin: 0 auto;
+
+        .nav {
+            width: 100%;
+            height: fit-content;
+            position: relative;
+            margin: 0 auto;
+
+            &__title {
+                font-family: $font-family-header;
+                font-size: 32px;
+                color: $color-white;
+                margin: 0 auto;
+                width: fit-content;
+            }
+
+            &__list {
+                list-style-type: none;
+                display: flex;
+                padding: 0;
+                justify-content: center;
+                margin: 45px auto 20px;
+
+                li {
+                    margin: 0 10px;
+                }
+
+                svg {
+                    height: 30px;
+                    width: 50px;
+                    color: $color-white;
+                }
+
+                .nav__tab {
+                    &:hover {
+                        svg {
+                            color: $golden;
+                        }
+                    }
+
+                    &--active {
+                        svg {
+                            color: $golden;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

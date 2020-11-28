@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Cinzel Decorative";
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/cinzeldecorative/v9/daaCSScvJGqLYhG8nNt8KPPswUAPni7TTMxpazyD.woff2)
+        format("woff2");
+}
+
+@font-face {
+    font-family: "HeaderFont";
+    src: url($fontsPath + "/GameofThrones.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,13 @@
+@mixin layout-container {
+    max-width: $container-max-width;
+    width: 100%;
+    padding: 16px 48px 36px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+@mixin typeset($font-family, $font-size, $line-height) {
+    font-family: $font-family;
+    font-size: $font-size;
+    line-height: $line-height;
+}

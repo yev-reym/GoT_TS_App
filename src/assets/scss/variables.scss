@@ -1,0 +1,23 @@
+// font faces
+$font-family-regular: "Cinzel Decorative", serif;
+$font-family-header: "HeaderFont", sans-serif;
+
+// colors
+$color-black: #000;
+$color-white: #fffff0;
+$color-cool-grey: #acb0be;
+$color-primary-navy: #01173b;
+$rich-black: #010b13;
+$golden: #e3b130;
+$main-gray: #081a27;
+$bookinfo-page: #D1BE9D;
+
+//vars injected by webpack
+$xsmall-breakpoint: 320;
+$small-breakpoint: 414;
+$medium-breakpoint: 768;
+$large-breakpoint: 1024;
+$xlarge-breakpoint: 1280;
+$slarge-breakpoint: 1440;
+
+$container-max-width: 1200px;
