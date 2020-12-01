@@ -1,25 +1,20 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const ENTRY_PATH = path.resolve(__dirname, '..', 'src', 'components', 'index.tsx')
 const OUT_PATH = path.resolve(__dirname, '..', 'build')
 const SRC_PATH = path.resolve(__dirname, '..', 'src')
 
 const htmlPlugin = new HtmlWebpackPlugin({
-  template: path.resolve(__dirname, '../', 'src', 'index.html'),
+  inject: true,
+  template: path.resolve(__dirname, '..', 'index.html'),
 })
 
 const definePlugin = new webpack.DefinePlugin({
   'process.env': {
     API_REQUEST_DOMAIN: JSON.stringify('https://www.anapioficeandfire.com/api/'),
   },
-})
-
-const miniCssExtractPlugin = new MiniCssExtractPlugin({
-  ignoreOrder: true,
-  filename: '[contenthash].bundle.min.css',
 })
 
 const breakpoints = {
@@ -41,13 +36,17 @@ module.exports = {
   output: {
     path: OUT_PATH,
     filename: '[hash].bundle.js',
+    chunkFilename: '[id].[hash].bundle.js',
+    publicPath: 'https://yev-reym.github.io/GoT_TS_App/'
   },
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     modules: ['node_modules'],
     alias: {
-      Components: path.resolve(__dirname, '..', 'components'),
+      Components: path.resolve(__dirname, '..', 'src', 'components'),
+      Utils: path.resolve(__dirname, '..', 'src', 'utils'),
+      Reducers: path.resolve(__dirname, '..', 'src', 'reducers'),
     },
   },
 
@@ -79,19 +78,20 @@ module.exports = {
         include: path.resolve(__dirname, '..', 'src'),
         use: [
           {
+            loader: 'style-loader',
+          },
+          {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
-              modules: {
-                localIdentName: "[name]__[local]___[hash:base64:5]",
-              },
+              modules: true
             },
           },
           {
             loader: 'sass-loader',
             options: {
               sassOptions: {
-                includePaths: [path.join(__dirname, '..', 'assets', 'scss')],
+                includePaths: [path.join(__dirname, '..', 'src')],
               },
             },
           },
@@ -117,18 +117,34 @@ module.exports = {
               ],
             },
           },
-          MiniCssExtractPlugin.loader
         ],
       },
       {
         test: /\.(ttf|eot|woff|woff2|gif|svg|png|jpeg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        include: [path.join(__dirname, '..', 'src')],
         exclude: [
           /\.js$/,
           /\.html$/,
           /\.json$/,
           /node_modules/,
         ],
-        use: [{ loader: 'file-loader' }],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
+        }],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        include: [path.join(__dirname, '..', 'src')],
+        use: [{
+          /* inline if smaller than 10 KB, otherwise load as a file */
+          loader: 'url-loader',
+          options: {
+            limit: 10000
+          }
+        }]
       },
     ],
   },
@@ -136,6 +152,5 @@ module.exports = {
   plugins: [
     htmlPlugin,
     definePlugin,
-    miniCssExtractPlugin
   ],
 }
