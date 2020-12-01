@@ -63,57 +63,75 @@ export const formatAndSortBookData = (
   const formattedBooks = bookData.map((bookObject: any, idx: number) =>
     formatBookObject(idx + 1, bookObject)
   )
-  console.log('formattedBooks', handleBookListSort(formattedBooks))
   return handleBookListSort(formattedBooks)
 }
 
-// export const formatHouseObject = (number, houseObject) => {
-//   Object.keys(houseObject).forEach((attribute) => {
-//     if (
-//       houseObject[attribute] === '' ||
-//       houseObject[attribute].length === 0 ||
-//       houseObject[attribute][0] === ''
-//     ) {
-//       return (houseObject[attribute] = 'Not Available')
-//     }
-//   })
+export const formatHouseObject = (
+  number: number,
+  houseObject: HouseType | any
+) => {
+  const formattedHouseObject = Object.keys(houseObject).reduce(
+    (acc, attribute: string) => {
+      if (!houseObject[attribute] || !houseObject[attribute][0]) {
+        return { ...acc, [attribute]: 'Not Available' }
+      }
+      return { ...acc, [attribute]: houseObject[attribute] }
+    },
+    {}
+  )
 
-//   return { number, ...houseObject }
-// }
+  return { number, ...formattedHouseObject }
+}
 
-// export const formatHousesData = (houseData) => {
-//   return houseData.map((houseObject, idx) =>
-//     formatHouseObject(idx + 1, houseObject)
-//   )
-// }
+export const formatHousesData = (houseData: HouseList): any => {
+  return houseData.map((houseObject: HouseType, idx: number) =>
+    formatHouseObject(idx + 1, houseObject)
+  )
+}
+
+const bookMapping = [
+  'Book 1: A Game of Thrones',
+  'Book 2: A Clash of Kings',
+  'Book 3: A Storm of Swords',
+  'Book 4: The Hedge Knight',
+  'Book 5: A Feast for Crows',
+  'Book 6: The Sworn Sword',
+  'Book 7: The Mystery Knight',
+  'Book 8: A Dance with Dragons',
+  'Book 9: The Princess and the Queen',
+  'Book 10: The Rogue Prince',
+  'Book 11: The World of Ice and Fire',
+  'Book 12: A Knight of the Seven Kingdoms',
+]
+
+export const formatCharacterBooks = (books: string[] | undefined) => {
+  if (books) {
+    const b = books.map((book) => {
+      const bookNum = book[book.length - 1]
+      return bookMapping[Number(bookNum)]
+    })
+
+    return b.length > 1 ? b.join(' · ') : b[0]
+  }
+
+  return 'Not Available'
+}
+
+export const checkEmptyFieldValues = (
+  fieldValue: [''] | string | string[] | undefined
+) => {
+  if (!fieldValue || !fieldValue[0]) {
+    return 'Not Available'
+  }
+  return typeof fieldValue === 'object' && fieldValue.length > 1
+    ? fieldValue.join(' · ')
+    : fieldValue
+}
 
 ///////////////////////////////////////////////////////////// ASYNC REQUESTS ///////////////////////////////////////////////////////////////////
-
-const API_URL_BOOKS = `${process.env.API_REQUEST_DOMAIN}books`
-const API_URL_HOUSES = `${process.env.API_REQUEST_DOMAIN}houses`
-
-const HOUSES_PAGE_SIZE = '&pageSize=20'
-
-export const fetchRequest = async (query = '') =>
-  await axios({
+export const fetchRequest = async (query = '') => {
+  return await axios({
     method: 'GET',
     url: `${process.env.API_REQUEST_DOMAIN}${query}`,
   })
-
-// export const fetchHousesRequest = (page) =>
-//   axios({
-//     method: 'GET',
-//     url: `${API_URL_HOUSES}?page=${page}` + HOUSES_PAGE_SIZE,
-//   })
-
-// export const fetchHouseRequest = (API_HOUSE_URL) =>
-//   axios({
-//     method: 'GET',
-//     url: API_HOUSE_URL,
-//   })
-
-// export const fetchCharacterRequest = (API_CHARACTER_URL) =>
-//   axios({
-//     method: 'GET',
-//     url: API_CHARACTER_URL,
-//   })
+}

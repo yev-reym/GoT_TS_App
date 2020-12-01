@@ -1,0 +1,135 @@
+.charinfo {
+    &_container {
+        display: flex;
+        align-items: center;
+
+        h3 {
+            margin: 0;
+            font-size: 15px !important;
+        }
+
+        svg {
+            color: #010b13;
+            font-size: 20px;
+            margin: 0 5px;
+        }
+    }
+}
+
+.modal__custom {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 2px solid $golden;
+    background: $rich-black;
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px 40px;
+    height: fit-content;
+    transform: translate(-50%, -50%);
+    color: $color-white;
+
+    h3 {
+        margin: 0;
+        font-size: 20px;
+        font-family: $font-family-regular;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        margin: 5px 0;
+
+        span {
+            margin-left: 5px;
+        }
+    }
+}
+
+.overlay__custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+:global {
+    .ReactModal__Overlay {
+        opacity: 0;
+        transition: opacity 500ms ease-in-out;
+    }
+
+    .ReactModal__Overlay--after-open {
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.75) !important;
+    }
+
+    .ReactModal__Overlay--before-close {
+        opacity: 0;
+    }
+
+    .MuiSelect-outlined.MuiSelect-outlined {
+        color: $color-white;
+        font-family: $font-family-regular;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+        border-color: $golden;
+    }
+}
+
+.members {
+    &_container {
+        color: $color-white;
+
+        .section {
+            &__top {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+        }
+
+        &--empty {
+            text-align: center;
+            font-family: $font-family-regular;
+            margin-top: 100px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 20px;
+            font-family: $font-family-regular;
+            text-align: center;
+            margin: 20px 0 15px;
+        }
+
+        svg {
+            color: $golden;
+        }
+
+        &__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 30px;
+            width: 100%;
+            padding: 10px 20px 40px;
+        }
+
+        .backbtn {
+            font-family: $font-family-regular;
+            position: relative;
+            cursor: pointer;
+
+            > svg {
+                position: absolute;
+                top: -2px;
+                left: -20px;
+            }
+        }
+    }
+}

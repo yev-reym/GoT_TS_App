@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { fetchRequest as getRequest } from 'Utils/'
 
 // Toggle hook to pass state for drilldowns
 export const useInfoToggle = (defaultState = false) => {
@@ -11,49 +12,55 @@ export const useInfoToggle = (defaultState = false) => {
   return [toggleState, toggleAction] as const
 }
 
+////////////////////////////////////////////////// Custom fetch hook that caches url requests /////////////////////////////////////////////////////////////////
+
 type Cache = ObjectGeneric<any>
 
-// Custom fetch hook that caches url requests
 export const useFetchGoTData = (
   query: string,
   dispatchBindedActions: any,
-  getRequest: (p?: any) => any
+  fetchDispatchArg?: any | undefined
 ) => {
   const requestsCache: React.MutableRefObject<Cache> = useRef({})
+  const _isMounted = useRef(true)
 
   const {
     fetchDispatchAction,
     successDispatchAction,
     failureDispatchAction,
   } = dispatchBindedActions
-  console.log('cache', requestsCache.current)
+
   useEffect(() => {
-    // Set boolean var which will check for unmounting
-    // If unmounted before side request is complete, we cancel the state update to prevent
-    // React state change errors
-    if (!query) return
+    return () => {
+      _isMounted.current = false
+    }
+  }, [])
 
-    const fetchData = async () => {
-      fetchDispatchAction()
-      if (!!requestsCache.current[query]) {
-        const data = requestsCache.current[query]
-        successDispatchAction(data)
-      } else {
-        try {
-          //   console.log('request', query)
-          const response = await getRequest(query)
-          //   console.log('response', response)
-          const data = await response.data
+  useEffect(() => {
+    if (!!query && query !== '') {
+      const fetchData = async () => {
+        fetchDispatchAction(fetchDispatchArg)
 
-          requestsCache.current[query] = data
+        if (!!requestsCache.current[query]) {
+          const data = requestsCache.current[query]
+          _isMounted.current && successDispatchAction(data)
+        } else {
+          try {
+            const response: any =
+              _isMounted.current && (await getRequest(query))
 
-          successDispatchAction(data)
-        } catch (error) {
-          failureDispatchAction(error.message)
+            const { data } = response
+
+            requestsCache.current[query] = data
+
+            _isMounted.current && successDispatchAction(data)
+          } catch (error) {
+            failureDispatchAction(error.message)
+          }
         }
       }
-    }
 
-    fetchData()
+      fetchData()
+    }
   }, [query])
 }

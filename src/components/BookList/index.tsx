@@ -13,16 +13,15 @@ const BookList: React.FC<BookListProps> = (): JSX.Element => {
   const [query, setQuery] = useState<string>('')
   const { loading, error, books = {}, bindedActions } = useBookContext()
 
-  if (loading && !books[sort]) {
-    return <Loader />
-  }
-  console.log('books', books)
-
-  useFetchGoTData(query, bindedActions, fetchRequest)
-
   useEffect(() => {
     setQuery('books?pageSize=12')
   }, [])
+
+  useFetchGoTData(query, bindedActions)
+
+  if (loading && !books[sort]) {
+    return <Loader />
+  }
 
   const renderBooks = (books: BookList): JSX.Element[] => {
     return books.map((book, idx: number) => {
@@ -34,10 +33,19 @@ const BookList: React.FC<BookListProps> = (): JSX.Element => {
     })
   }
 
-  const renderError = (error: string) => (
-    <span>
+  const renderError = () => (
+    <span
+      style={{
+        fontSize: '25px',
+        color: 'white',
+        width: '100%',
+        textAlign: 'center',
+        marginTop: '20px',
+        display: 'block',
+        fontFamily: 'Cinzel Decorative',
+      }}
+    >
       We are experiencing technical difficulties, we apologize!
-      {`Error: ${error}`}
     </span>
   )
 
@@ -62,7 +70,7 @@ const BookList: React.FC<BookListProps> = (): JSX.Element => {
         {!!books[sort]
           ? renderBooks(books[sort])
           : error
-          ? renderError(error)
+          ? renderError()
           : null}
       </ul>
     </>

@@ -19,7 +19,7 @@ const Nav: React.FC<NavProps> = ({ tabs }) => {
       return (
         <li key={i}>
           <NavLink
-            exact
+            exact={tab.route === '/' || tab.route === '/books'}
             className={styles.nav__tab}
             activeClassName={styles['nav__tab--active']}
             to={`${tab.route}`}

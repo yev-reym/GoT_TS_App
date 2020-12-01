@@ -1,0 +1,74 @@
+.houseinfo {
+    &_container {
+        background-color: #d1be9d;
+        border: 2px solid $golden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 100%;
+        width: 100%;
+        padding: 20px 30px;
+        box-sizing: border-box;
+        margin-top: 20px;
+
+        h3 {
+            font-family: $font-family-regular;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        &__list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 30px;
+            width: 100%;
+            padding: 10px 20px 40px;
+
+            &__field {
+                display: flex;
+                flex-direction: column;
+                width: max-content;
+                margin: 0;
+
+                &__title {
+                    font-weight: bold;
+                    margin: 10px 0 4px;
+                }
+
+                > span {
+                    margin-left: 20px;
+                    color: $color-white;
+                    font-family: $font-family-regular;
+                    max-width: 200px;
+                    width: auto;
+                }
+
+                .members {
+                    position: relative;
+                    cursor: pointer;
+                    svg {
+                        position: absolute;
+                        top: -1px;
+                        right: -25px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.backbtn {
+    color: $golden;
+    font-family: $font-family-regular;
+    position: relative;
+    cursor: pointer;
+
+    > svg {
+        position: absolute;
+        top: -2px;
+        left: -20px;
+    }
+}

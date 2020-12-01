@@ -52,6 +52,14 @@ module.exports = {
     },
   },
 
+  optimization: {
+    namedModules: true,
+    splitChunks: {
+      minChunks: 3,
+    },
+    noEmitOnErrors: true,
+  },
+
   devServer: {
     contentBase: path.resolve(__dirname, '../', 'src'),
     open: true,

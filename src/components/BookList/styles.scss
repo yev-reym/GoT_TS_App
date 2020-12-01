@@ -10,16 +10,6 @@
             width: 300px;
             height: 400px;
         }
-
-        // .flip {
-        //     &__override {
-        //         .rfp-touchZone {
-        //             &.rfp-touchZone-next {
-        //                 cursor: pointer !important;
-        //             }
-        //         }
-        //     }
-        // }
     }
 }
 
@@ -49,6 +39,8 @@
 
         span {
             margin-left: 10px;
+            font-family: $font-family-regular;
+            color: $color-white;
         }
     }
 }
