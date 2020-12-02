@@ -118,7 +118,7 @@ const Character: React.FC<CharacterProps> = ({
       <section className={styles.charinfo_container}>
         <h3>{name}</h3>
 
-        {shouldRenderModal && (
+        {shouldRenderModal && name && (
           <VisibilitySharpIcon
             style={{ cursor: 'pointer' }}
             onClick={() => toggleTo(true)}

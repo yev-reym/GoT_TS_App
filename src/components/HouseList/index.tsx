@@ -59,7 +59,7 @@ const HouseList: React.FC<HouseListProps> = ({ location }): JSX.Element => {
     <>
       {houses[pageNumber] ? (
         <TableView
-          data={houses[pageNumber]}
+          data={houses[location?.state?.goToPage || pageNumber]}
           columns={houseListColumns}
           setPage={setPageNumber}
           pageNumber={location?.state?.goToPage || pageNumber}

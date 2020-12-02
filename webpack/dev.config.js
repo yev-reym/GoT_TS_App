@@ -8,7 +8,7 @@ const SRC_PATH = path.resolve(__dirname, '..', 'src')
 
 const htmlPlugin = new HtmlWebpackPlugin({
   inject: true,
-  template: path.resolve(__dirname, '..', 'src', 'index.html'),
+  template: path.resolve(__dirname, '..', 'index.html'),
 })
 
 const definePlugin = new webpack.DefinePlugin({

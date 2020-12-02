@@ -3,6 +3,10 @@ import Loader from 'Components/Loader'
 import { useBookContext } from '../../contexts/BookContext'
 import { useFetchGoTData } from '../../hooks'
 import BookItem from './components/BookItem'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import FormControl from '@material-ui/core/FormControl'
 import styles from './styles.scss'
 
 interface BookListProps {}
@@ -50,20 +54,30 @@ const BookList: React.FC<BookListProps> = (): JSX.Element => {
 
   return (
     <>
-      <label className={styles.label} htmlFor="sorts">
-        Sort By:
-      </label>
-      <select
-        id="sorts"
-        name="sorts"
-        onChange={(e) => changeSort(e.target.value)}
-        value={sort}
-      >
-        <option value="Oldest">Oldest</option>
-        <option value="Newest">Newest</option>
-        <option value="Most Pages">Most Pages</option>
-        <option value="Least Pages">Least Pages</option>
-      </select>
+      <FormControl variant={'outlined'}>
+        <label
+          style={{ marginBottom: '5px' }}
+          className={styles.label}
+          htmlFor="sorts"
+        >
+          Sort By:
+        </label>
+        <InputLabel htmlFor="sorts" />
+        <Select
+          defaultValue={sort}
+          autoWidth
+          id="sorts"
+          onChange={(e) => changeSort(`${e.target.value}`)}
+        >
+          <MenuItem value="Oldest">
+            <em>Oldest</em>
+          </MenuItem>
+          {/* <MenuItem value={"Oldest"}>Male</MenuItem> */}
+          <MenuItem value={'Newest'}>Newest</MenuItem>
+          <MenuItem value={'Most Pages'}>Most Pages</MenuItem>
+          <MenuItem value={'Least Pages'}>Least Pages</MenuItem>
+        </Select>
+      </FormControl>
 
       <ul className={styles.booklist_container}>
         {!!books[sort]

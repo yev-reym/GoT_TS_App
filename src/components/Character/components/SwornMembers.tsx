@@ -66,7 +66,10 @@ const SwornMembers: React.FC<SwornMembersProps> = ({ location, match }) => {
       if (res.data) {
         const { swornMembers, name } = res.data
         setHName(name)
-        setSwornMembersList(swornMembers)
+
+        swornMembers.length === 0
+          ? setSwornMembersList('Not Available')
+          : setSwornMembersList(swornMembers)
       }
     } catch (error) {
       setError(error.message)
@@ -98,6 +101,7 @@ const SwornMembers: React.FC<SwornMembersProps> = ({ location, match }) => {
       const {
         state: { swornMembers },
       } = location
+      console.log(swornMembers)
       setLoading(true)
       setSwornMembersList(swornMembers)
     }
@@ -107,10 +111,11 @@ const SwornMembers: React.FC<SwornMembersProps> = ({ location, match }) => {
     if (
       Array.isArray(swornMembersList) &&
       swornMembersList.length !== 0 &&
-      loading &&
       _shouldAsync.current
     ) {
       bulkFetch()
+    } else {
+      setLoading(false)
     }
   }, [JSON.stringify(swornMembersList)])
 
@@ -130,7 +135,10 @@ const SwornMembers: React.FC<SwornMembersProps> = ({ location, match }) => {
     })
   }
 
-  if (loading || !swornMembersList.length) {
+  if (
+    (loading && swornMembersList.length === 0) ||
+    (Array.isArray(swornMembersList) && typeof swornMembersList[0] === 'string')
+  ) {
     return <Loader />
   }
 
@@ -182,7 +190,7 @@ const SwornMembers: React.FC<SwornMembersProps> = ({ location, match }) => {
         )}
       </div>
       <h2>{location?.state?.houseName ?? hName}</h2>
-      {!Array.isArray(swornMembersList) || swornMembersList.length === 0 ? (
+      {!Array.isArray(swornMembersList) ? (
         <div className={styles['members_container--empty']}>
           No Sworn Members Available
         </div>
@@ -190,7 +198,7 @@ const SwornMembers: React.FC<SwornMembersProps> = ({ location, match }) => {
         <div className={styles.members_container__grid}>
           {renderSwornMembers(
             filterSwornMembers(swornMembersList, currentFilter)
-          ).length === 0 ? (
+          ).length === 0 && currentFilter !== 'None' ? (
             <div className={styles['members_container--empty']}>
               No Sworn Members Under Current Filter
             </div>

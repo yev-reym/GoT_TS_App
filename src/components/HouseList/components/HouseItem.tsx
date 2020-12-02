@@ -57,6 +57,7 @@ const House: React.FC<HouseProps> = (props): JSX.Element => {
     }
   }
 
+  console.log('in house', props)
   const cameFromHouses = !!props?.location?.state
 
   useEffect(() => {

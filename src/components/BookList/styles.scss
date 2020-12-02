@@ -30,7 +30,7 @@
             font-weight: bold;
             width: 100%;
             text-align: center;
-            margin-top: 5px;
+            margin: 5px 0 0;
         }
 
         &__section {
@@ -42,7 +42,7 @@
             margin-left: 10px;
             font-family: $font-family-regular;
             color: $color-white;
-            font-size: 15px
+            font-size: 15px;
         }
     }
 }
@@ -56,5 +56,16 @@
 :global {
     .rfp-touchZone {
         cursor: pointer;
+    }
+
+    .MuiSelect-outlined.MuiSelect-outlined {
+        color: $color-white;
+        font-family: $font-family-regular;
+        border: 2px solid $golden;
+        border-radius: 2px;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+        border-color: $golden;
     }
 }
