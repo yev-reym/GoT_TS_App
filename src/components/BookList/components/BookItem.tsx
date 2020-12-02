@@ -25,7 +25,7 @@ const BookItem: React.FC<BookItemProps> = ({ book }): JSX.Element => {
     >
       <img
         className={styles.book__image}
-        src={`../../../assets/images/books/book${number}.png`}
+        src={require(`../../../assets/images/books/book${number}.png`).default}
         alt={`${number}`}
       />
       <BookInfo {...book} />

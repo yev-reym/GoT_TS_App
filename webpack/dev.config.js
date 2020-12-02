@@ -89,24 +89,19 @@ module.exports = {
         use: [
           {
             loader: 'style-loader',
-            options: {
-              injectType: 'singletonStyleTag',
-            }
           },
           {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
-              modules: {
-                localIdentName: "[name]__[local]___[hash:base64:5]",
-              },
+              modules: true
             },
           },
           {
             loader: 'sass-loader',
             options: {
               sassOptions: {
-                includePaths: [path.join(__dirname, '..', 'assets', 'scss')],
+                includePaths: [path.join(__dirname, '..', 'src')],
               },
             },
           },
@@ -114,7 +109,7 @@ module.exports = {
             loader: '@epegzz/sass-vars-loader',
             options: {
               vars: {
-                fontsPath: path.resolve(__dirname, '../src/assets/fonts'),
+                fontsPath: path.resolve(__dirname, '../src/assets/fonts/'),
                 breakpointsmall: `"${breakpoints.small}"`,
                 breakpointmedium: `"${breakpoints.medium}"`,
                 breakpointlarge: `"${breakpoints.large}"`,
@@ -135,14 +130,30 @@ module.exports = {
         ],
       },
       {
-        test: /\.(ttf|eot|woff|woff2|gif|svg|png|jpeg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(ttf|eot|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         exclude: [
           /\.js$/,
           /\.html$/,
           /\.json$/,
           /node_modules/,
         ],
-        use: [{ loader: 'file-loader' }],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        }],
+      },
+      {
+        test: /\.(jpg|jpeg|png)$/,
+        use: [{
+          /* inline if smaller than 10 KB, otherwise load as a file */
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: '[name].[ext]',
+          }
+        }]
       },
     ],
   },

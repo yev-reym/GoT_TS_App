@@ -14,6 +14,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
 const definePlugin = new webpack.DefinePlugin({
   'process.env': {
     API_REQUEST_DOMAIN: JSON.stringify('https://www.anapioficeandfire.com/api/'),
+    ENVIRONMENT: JSON.stringify('prod')
   },
 })
 
@@ -120,8 +121,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(ttf|eot|woff|woff2|gif|svg|png|jpeg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        include: [path.join(__dirname, '..', 'src')],
+        test: /\.(ttf|eot|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         exclude: [
           /\.js$/,
           /\.html$/,
@@ -131,18 +131,18 @@ module.exports = {
         use: [{
           loader: 'file-loader',
           options: {
-            name: '[name].[ext]',
-          },
+            name: '[name].[ext]'
+          }
         }],
       },
       {
-        test: /\.(png|jpe?g|gif)$/,
-        include: [path.join(__dirname, '..', 'src')],
+        test: /\.(jpg|jpeg|png)$/,
         use: [{
           /* inline if smaller than 10 KB, otherwise load as a file */
           loader: 'url-loader',
           options: {
-            limit: 10000
+            limit: 10000,
+            name: '[name].[ext]',
           }
         }]
       },

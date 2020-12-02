@@ -18,7 +18,7 @@ const LandingMap: React.FC = (): JSX.Element => {
       </p>
       <img
         className={styles.map_img}
-        src="../assets/images/gotmap.jpg"
+        src={require('../../assets/images/gotmap.jpg').default}
         alt="continental-map"
       />
     </main>

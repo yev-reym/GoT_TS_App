@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Loader from 'Components/Loader'
 import { useBookContext } from '../../contexts/BookContext'
 import { useFetchGoTData } from '../../hooks'
-import { fetchRequest } from 'Utils/'
 import BookItem from './components/BookItem'
 import styles from './styles.scss'
 
